@@ -32,7 +32,7 @@ def node(i, label, col, row, at, icon=None):
 
 S = {}
 S["1"] = {"header": False, "shots": [
-    {"type": "hook", "at": "@start", "text": "Menos instrução, **mais prova**", "src": M + "01-capa-hook.png"},
+    {"type": "hook", "at": "@start", "text": "15 comandos · **kit grátis**", "src": M + "01-capa-hook.png"},
     {"type": "fields", "at": "trabalhar com menos", "title": "O seu agente", "fields": [
         {"label": "Instrução", "value": "menos", "at": "menos instrução"},
         {"label": "Tokens", "value": "menos", "at": "gastar menos tokens"},
