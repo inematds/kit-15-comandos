@@ -15,7 +15,7 @@ Anthropic, anedotas). Tese INEMA: de prompt detalhado para contexto, execução 
 2. `curl -s -o /dev/null -w '%{http_code}' https://inematds.github.io/kit-15-comandos/guia/` (e en/ es/) → `200`
 3. `curl -sIL https://github.com/inematds/kit-15-comandos/releases/download/kit-v1.0.0/kit-15-comandos.zip | grep -c "200"` → ≥1
 4. `grep -ciE "agentic academy|boris|tarik|cherny" guia/index.html guia/en/index.html guia/es/index.html` → 0 em cada
-5. `ffprobe` do 16:9 → 1920x1080, duração ≥ 240 s; do r7ex → 1080x1920, < 60 s
+5. `ffprobe` do 16:9 → 1920x1080, duração ≥ 180 s (saiu 204 s: o avatar fala mais rápido que 800 car/min); do r7ex → 1080x1920, < 60 s
 6. YouTube lives4: ID do 16:9 (yt-pubx) + r7ex na fila do r7ex com canal lives4
 7. portal: commit com `kit-15-comandos` + vídeos; push no origin
 8. Telegram INEMA.CCODE: link do tópico + msg do MENU
