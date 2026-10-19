@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kit 15 Comandos — menos instrução, mais prova</title>
+<meta name="description" content="O Claude Code mudou: 15 comandos e recursos para trabalhar com menos instrução, gastar menos tokens e provar que o trabalho terminou. Como implementar cada um, kit para baixar e o que a comunidade INEMA já tem. Grátis, do INEMA.CLUB.">
+<link rel="alternate" hreflang="pt-BR" href="https://inematds.github.io/kit-15-comandos/guia/"><link rel="alternate" hreflang="en" href="https://inematds.github.io/kit-15-comandos/guia/en/"><link rel="alternate" hreflang="es" href="https://inematds.github.io/kit-15-comandos/guia/es/">
+<meta property="og:title" content="Kit 15 Comandos — menos instrução, mais prova">
+<meta property="og:description" content="O Claude Code mudou: 15 comandos e recursos para trabalhar com menos instrução, gastar menos tokens e provar que o trabalho terminou. Como implementar cada um, kit para baixar e o que a comunidade INEMA já tem. Grátis, do INEMA.CLUB.">
+<meta property="og:image" content="https://inematds.github.io/kit-15-comandos/guia/assets/banner.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0c0c10; --bg2:#14141b; --card:#16161e; --line:#272730;
+    --txt:#e9e9ee; --mut:#9a9aa6; --amb:#FACC15; --amb2:#f0c070; --sky:#38bdf8; --pro:#cbd5e1;
+    color-scheme:dark;
+  }
+  body.light{
+    --bg:#f6f7f9; --bg2:#eceef2; --card:#ffffff; --line:#e1e3ea;
+    --txt:#1a1a22; --mut:#5b5b68; --amb:#a16207; --amb2:#a16207; --sky:#0369a1; --pro:#b45309;
+    color-scheme:light;
+  }
+  body.light .hero .glow{opacity:.5}
+  body.light pre{background:#0e0e14;color:#d6d6e0}
+  body.light pre .c{color:#8a8a98}
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--txt);font:16px/1.65 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:Sora,sans-serif;line-height:1.15;margin:0}
+  a{color:var(--amb);text-decoration:none}
+  code,pre{font-family:"JetBrains Mono",monospace}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 22px}
+  .mut{color:var(--mut)} .amb{color:var(--amb)}
+  .chip{display:inline-block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amb);font-weight:600;font-family:Sora}
+  nav{position:sticky;top:0;z-index:30;backdrop-filter:blur(12px);background:rgba(12,12,16,.78);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;gap:22px;height:60px}
+  nav .brand{display:flex;align-items:center;gap:8px;font-family:Sora;font-weight:800;letter-spacing:-.02em;color:var(--amb)}
+  nav .brand .emoji{font-size:1.25rem}
+  nav .sep{color:var(--mut);opacity:.45}
+  nav .inema{color:var(--sky);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .inema:hover{filter:brightness(1.15)}
+  nav .pro{color:var(--pro);font-weight:600;font-size:.88rem;font-family:Sora}
+  nav .pro:hover{filter:brightness(1.15)}
+  nav .clubpro{display:inline-flex;align-items:center;gap:6px}
+  nav .links{margin-left:auto;display:flex;align-items:center;gap:20px;font-size:.92rem}
+  nav .links a.sec{color:var(--mut)} nav .links a.sec:hover{color:var(--txt)}
+  .lang{display:inline-flex;gap:2px;font-family:Sora;font-size:.78rem}
+  .lang a{color:var(--mut);padding:.2em .45em;border-radius:6px} .lang a.on{color:var(--amb);background:rgba(250,204,21,.12)}
+  .tgl{background:var(--bg2);border:1px solid var(--line);color:var(--txt);width:38px;height:38px;border-radius:10px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem}
+  .tgl:hover{border-color:var(--amb)}
+  .btn{display:inline-block;background:var(--amb);color:#1a1206;font-weight:600;padding:.6em 1.05em;border-radius:10px;font-family:Sora}
+  .btn.ghost{background:transparent;color:var(--txt);border:1px solid var(--line)}
+  @media(max-width:1100px){nav .links a.sec{display:none}}
+  @media(max-width:520px){nav .wrap{gap:8px;padding:8px 14px;height:auto;flex-wrap:wrap} nav .links{gap:8px;margin-left:0;width:100%;justify-content:space-between} nav .btn{padding:.45em .7em;font-size:.82rem} .tgl{width:34px;height:34px}}
+  .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+  .hero .glow{position:absolute;inset:-40% -20% auto auto;width:70%;height:600px;background:radial-gradient(closest-side,rgba(250,204,21,.22),transparent 70%);pointer-events:none}
+  .hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;padding:74px 22px}
+  .hero h1{font-size:clamp(2.2rem,5vw,3.5rem);font-weight:800;letter-spacing:-.025em}
+  .hero p.lead{font-size:1.18rem;color:var(--mut);margin:1.1em 0 1.6em;max-width:34ch}
+  .hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+  .hero figure{margin:0;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000}
+  .hero figure img{width:100%;display:block}
+  .resumo{padding:38px 0 34px;border-bottom:1px solid var(--line)}
+  .resumo p{font-size:1.12rem;line-height:1.7;max-width:74ch;margin:.55em 0 0}
+  @media(max-width:780px){.hero .wrap{grid-template-columns:1fr;padding:48px 22px}}
+  section{padding:62px 0;border-bottom:1px solid var(--line)}
+  section h2{font-size:clamp(1.5rem,3.4vw,2.1rem);font-weight:800;letter-spacing:-.02em}
+  section .sub{color:var(--mut);margin:.6em 0 2em;max-width:62ch}
+  .grid{display:grid;gap:16px}
+  .g3{grid-template-columns:repeat(3,1fr)} .g4{grid-template-columns:repeat(4,1fr)} .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:820px){.g3,.g4{grid-template-columns:1fr 1fr}}
+  @media(max-width:540px){.g2,.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .card h3{font-size:1.05rem;margin-bottom:.4em}
+  .card p{color:var(--mut);font-size:.92rem;margin:0}
+  .num{display:inline-flex;width:30px;height:30px;align-items:center;justify-content:center;border-radius:8px;background:rgba(250,204,21,.14);color:var(--amb);font-family:Sora;font-weight:800;font-size:.9rem;margin-bottom:.7em}
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:10px}
+  .flow span{background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:.45em .9em;font-size:.85rem;font-family:Sora;font-weight:600}
+  .flow .arr{color:var(--amb);border:none;background:none;padding:0 .1em}
+  pre{background:#0a0a0e;border:1px solid var(--line);border-radius:12px;padding:16px 18px;overflow:auto;font-size:.86rem;line-height:1.6;color:#d6d6e0}
+  pre .c{color:#6f6f7c} pre .k{color:var(--amb2)} pre .s{color:#9ece6a}
+  .step{display:grid;grid-template-columns:46px minmax(0,1fr);gap:16px;margin-bottom:26px}
+  .step>div,.card{min-width:0}
+  p code,li code,td code{overflow-wrap:anywhere}
+  .step .b{width:46px;height:46px;border-radius:12px;background:var(--amb);color:#1a1206;font-family:Sora;font-weight:800;font-size:1.25rem;display:flex;align-items:center;justify-content:center}
+  .step h3{font-size:1.12rem;margin-bottom:.3em}
+  .step p{color:var(--mut);margin:.2em 0 .7em}
+  .ex{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media(max-width:680px){.ex{grid-template-columns:1fr}}
+  .ex figure{margin:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+  .ex figure img{width:100%;display:block}
+  .ex figcaption{padding:12px 14px;font-size:.88rem;color:var(--mut);background:var(--card)}
+  .phase{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+  .phase:last-child{border:none}
+  .phase .tag{flex:0 0 92px;font-family:Sora;font-weight:800;color:var(--amb)}
+  .phase .d strong{display:block;margin-bottom:.2em}
+  .phase .d span{color:var(--mut);font-size:.92rem}
+  footer{padding:46px 0;text-align:center;color:var(--mut);font-size:.9rem}
+  .pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.3em .8em;font-size:.78rem;color:var(--mut);margin:0 4px}
+</style>
+
+<style>
+  .camada{padding:30px 0;border-top:1px solid var(--line)} .camada:first-of-type{border-top:none}
+  .cab{display:grid;grid-template-columns:1fr 1.2fr;gap:26px;align-items:center;margin-bottom:20px}
+  @media(max-width:820px){.cab{grid-template-columns:1fr}}
+  .ill{margin:0;border-radius:14px;overflow:hidden;border:1px solid var(--line)}
+  .ill img{width:100%;display:block;aspect-ratio:16/9;object-fit:cover}
+  .cab h3{font-size:1.5rem;margin:.2em 0 .3em} .cab p{color:var(--mut);margin:0}
+  .rot{font-family:Sora;font-weight:800;color:var(--amb);font-size:.85rem;letter-spacing:.1em;text-transform:uppercase}
+  .dicas{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+  .dica{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;min-width:0;display:flex;flex-direction:column;gap:8px}
+  .dica .top{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .dica .n{font:800 1.6rem/1 Sora;color:var(--amb);min-width:2ch}
+  .dica h4{font:700 1.08rem/1.25 Sora;margin:0}
+  .dica code.cmd{display:block;font-family:'JetBrains Mono',monospace;font-size:.86rem;background:rgba(250,204,21,.09);border:1px solid rgba(250,204,21,.35);border-radius:8px;padding:6px 10px;overflow-wrap:anywhere;color:var(--txt)}
+  .st{font-size:.72rem;font-weight:600;border-radius:99px;padding:.2em .7em;white-space:nowrap}
+  .st.ok{background:rgba(34,197,94,.14);color:#22c55e;border:1px solid rgba(34,197,94,.4)}
+  .st.conferir{background:rgba(250,204,21,.12);color:var(--amb);border:1px solid rgba(250,204,21,.4)}
+  body.light .st.conferir{color:#854d0e}
+  .dica .lb{font:700 .74rem Sora;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);margin-top:4px}
+  .dica p{margin:0;color:var(--txt);font-size:.95rem}
+  .dica ol{margin:0;padding-left:1.2em;font-size:.93rem} .dica ol li{margin:.25em 0}
+  .dica .ln{display:flex;flex-wrap:wrap;gap:6px} .dica .ln a{font-size:.84rem;border:1px solid var(--line);border-radius:99px;padding:.2em .7em}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:22px} @media(max-width:820px){.two{grid-template-columns:1fr}}
+  .box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;min-width:0}
+  .box h3{font-size:1.05rem;margin-bottom:.4em} .box p{color:var(--mut);margin:.2em 0 .8em}
+  .box pre{white-space:pre-wrap;overflow-wrap:anywhere;margin:0}
+  .copy{margin-top:12px;font-size:.85rem;padding:.45em .9em}
+  .modelos{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:18px}
+  .dl{display:flex;gap:12px;flex-wrap:wrap;margin:6px 0 24px}
+  ul.arq{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:10px} @media(max-width:700px){ul.arq{grid-template-columns:1fr}}
+  ul.arq li{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 14px;display:flex;flex-direction:column;min-width:0}
+  ul.arq code{font-family:'JetBrains Mono',monospace;font-size:.86rem;color:var(--amb);overflow-wrap:anywhere} ul.arq span{color:var(--mut);font-size:.9rem}
+  body.light ul.arq code{color:#854d0e}
+  .grid.g3{grid-template-columns:repeat(3,1fr)} @media(max-width:900px){.grid.g3{grid-template-columns:1fr 1fr}} @media(max-width:560px){.grid.g3{grid-template-columns:1fr}}
+  .kitf .eixo{color:var(--amb);font-size:.84rem;margin-top:.5em} body.light .kitf .eixo{color:#854d0e}
+  .grupos{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+  .grupo h3{font-size:1rem;margin:0 0 .5em} .grupo a{display:block;padding:.3em 0;border-bottom:1px solid var(--line);font-size:.93rem}
+  .vids{display:grid;grid-template-columns:2fr 1fr;gap:20px;align-items:start} @media(max-width:820px){.vids{grid-template-columns:1fr}}
+  .vids video{width:100%;border-radius:14px;border:1px solid var(--line);background:#000;display:block}
+  .vids .v916 video{max-width:360px;margin:0 auto}
+  .vids h3{font-size:1rem;margin:0 0 .6em} .vids p{margin:.6em 0 0;font-size:.88rem}
+  table.cola{width:100%;border-collapse:collapse} table.cola td{padding:12px;border-bottom:1px solid var(--line)} table.cola td:first-child{font-family:Sora;font-weight:800;color:var(--amb);white-space:nowrap}
+  body.light table.cola td:first-child{color:#854d0e}
+  .tip{border-left:3px solid var(--amb);background:rgba(250,204,21,.08);padding:12px 16px;border-radius:0 10px 10px 0;margin:14px 0 0;color:var(--txt)}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+  <a class="brand" href="./"><span class="emoji">⌨️</span> Kit 15 Comandos</a>
+  <span class="sep">|</span>
+  <span class="clubpro">
+    <a class="inema" href="https://inema.club" target="_blank" rel="noopener">INEMA.CLUB</a>
+    <span class="sep">-</span>
+    <a class="pro" href="https://inema.pro" target="_blank" rel="noopener">PRO</a>
+  </span>
+  <div class="links">
+    <a class="sec" href="#tese">Tese</a><a class="sec" href="#dicas">15 dicas</a><a class="sec" href="#kit">Kit</a><a class="sec" href="#comunidade">Comunidade</a>
+    <span class="lang"><a class="on" href="./">PT</a><a href="en/">EN</a><a href="es/">ES</a></span>
+    <button class="tgl" id="themeToggle" aria-label="Alternar tema" title="Alternar tema">🌙</button>
+    <a class="btn" href="https://github.com/inematds/kit-15-comandos" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</div></nav>
+
+<header class="hero" id="top">
+  <div class="glow"></div>
+  <div class="wrap">
+    <div>
+      <span class="chip">Claude Code · Codex · agentes</span>
+      <h1>O Claude mudou. <span class="amb">15 comandos</span> para dominar</h1>
+      <p class="lead">Os modelos ficaram bons o bastante para dispensar boa parte das instruções longas. O jogo agora é outro: dar o contexto certo, deixar o agente executar e exigir prova de que terminou.</p>
+      <div class="cta"><a class="btn" href="#dicas">Ver as 15 dicas</a><a class="btn ghost" href="https://github.com/inematds/kit-15-comandos/releases/download/kit-v1.0.0/kit-15-comandos.zip">Baixar o kit (.zip)</a></div>
+    </div>
+    <figure><img src="assets/banner.jpg" alt="Banner: robô humanoide de visor preto trabalhando numa bancada com quinze cartões luminosos"></figure>
+  </div>
+</header>
+<section id="resumo" class="resumo"><div class="wrap"><span class="chip">Em resumo</span><p>Este é um guia grátis para quem usa o Claude Code (e vale quase tudo para o Codex e outros agentes). São 15 mudanças em cinco camadas: skills, modelo e configurações, plano e prova, contexto e delegação, e trabalho rodando sem você. Para cada uma você vê o que mudou, como implementar com o comando exato e o que a comunidade INEMA já tem sobre o assunto. No fim há um kit para baixar, com modelos prontos, e a lista dos próximos kits que vamos criar.</p></div></section>
+<section id="tese"><div class="wrap">
+  <span class="chip">A tese</span><h2>De prompt detalhado para contexto, execução e prova</h2><p class="sub">Antes a gente escrevia trezentas linhas ensinando o agente a trabalhar. Hoje ele já sabe. O que ele não sabe é o seu contexto, e ninguém garante que terminou se você não pedir prova.</p>
+  <figure style="margin:0 0 26px;border-radius:16px;overflow:hidden;border:1px solid var(--line);box-shadow:0 30px 80px -30px #000"><img src="assets/banner-grade.jpg" alt="Banner em grade: skills, modelo, prova, contexto, delegação, sem você" loading="lazy" style="width:100%;display:block"></figure>
+  <div class="grid g3"><div class="card"><h3>🧭 Contexto</h3><p>Dê ao agente só o que ele não descobre sozinho: o seu negócio, as suas regras, onde estão as coisas. Em arquivos pequenos, chamados quando precisa.</p></div><div class="card"><h3>⚙️ Execução</h3><p>Deixe o agente trabalhar, delegar e continuar. Os padrões melhoraram; mexer em tudo costuma piorar.</p></div><div class="card"><h3>✅ Verificação</h3><p>"Terminei" não é prova. Teste passando, arquivo gerado e um verificador que confere antes de deixar parar.</p></div></div>
+</div></section>
+<section id="dicas"><div class="wrap">
+  <span class="chip">As 15 dicas</span><h2>Cinco camadas, quinze mudanças</h2><p class="sub">Cada dica tem três partes: o que mudou, como implementar e o que já existe no INEMA. O selo diz se o comando foi conferido na nossa instalação ou se você deve conferir na sua.</p>
+  <div class="camada" id="c-skills">
+  <div class="cab"><figure class="ill"><img src="assets/c1-skills.jpg" alt="Robô de visor preto diante de um manual enorme fechado e, ao lado, um único cartão pequeno com três linhas" loading="lazy"></figure><div><span class="rot">Camada 1</span><h3>Skills</h3><p>A skill deixa de ser um manual e vira uma lista de correções.</p></div></div>
+  <div class="dicas"><article class="dica" id="d1">
+  <div class="top"><span class="n">1</span><h4>Skills menores</h4><span class="st ok">confirmado na 2.1.303</span></div>
+  <code class="cmd">SKILL.md curto</code>
+  <div class="lb">O que mudou</div><p>O modelo já escreve bem, organiza e evita texto robótico sem receita. Skill longa repete o que ele já faz e ocupa contexto. Ela deve guardar só o que ele erra e o conhecimento que só você tem.</p>
+  <div class="lb">Como implementar</div><ol><li>Faça a tarefa sem skill nenhuma, numa sessão limpa.</li><li>Anote só o que saiu errado ou diferente do seu jeito.</li><li>A skill vira essa lista: correções, nomes, caminhos, exceções do seu negócio.</li><li>Revise a cada troca de modelo: o que ele passou a acertar sai da skill.</li></ol>
+  <div class="lb">No INEMA</div><div class="ln"><a href="https://inematds.github.io/skills-craft-v6/" target="_blank" rel="noopener">Skills v6 (curso) ↗</a><a href="https://inematds.github.io/skills-craft/" target="_blank" rel="noopener">Criando Agent Skills ↗</a></div>
+</article><article class="dica" id="d2">
+  <div class="top"><span class="n">2</span><h4>Avalie com e sem a skill</h4><span class="st ok">confirmado na 2.1.303</span></div>
+  <code class="cmd">claude plugin eval --ablation with-without</code>
+  <div class="lb">O que mudou</div><p>Skill boa é a que melhora o resultado. A comparação é simples: a mesma tarefa com a skill e sem ela. Se não ganhar, enxugue ou apague.</p>
+  <div class="lb">Como implementar</div><ol><li>Escreva 3 a 5 casos reais da tarefa, com o que conta como resultado bom.</li><li>Rode a mesma tarefa com e sem a skill (o eval de plugin já faz o braço "sem").</li><li>Compare a nota: perdeu ou empatou, corte linhas; continuou empatando, apague.</li><li>Guarde os casos: viram o teste da próxima versão da skill.</li></ol>
+  <div class="lb">No INEMA</div><div class="ln"><a href="https://inematds.github.io/auditar-skills/guia/" target="_blank" rel="noopener">Auditar Skills ↗</a><a href="https://inematds.github.io/curso-ablacao/" target="_blank" rel="noopener">Auditoria de Ablação (curso) ↗</a><a href="https://inematds.github.io/audit-ablacaocc/guia/" target="_blank" rel="noopener">audit-ablacaocc ↗</a></div>
+</article><article class="dica" id="d3">
+  <div class="top"><span class="n">3</span><h4>Grave a tarefa e vire skill</h4><span class="st conferir">conferir na sua versão</span></div>
+  <code class="cmd">Record a skill (app desktop)</code>
+  <div class="lb">O que mudou</div><p>Em vez de escrever a skill, você faz a tarefa uma vez e o agente observa. Como ele só registra o que não saberia sozinho, a skill sai pequena.</p>
+  <div class="lb">Como implementar</div><ol><li>No app desktop, use a gravação de skill e faça a tarefa como sempre faz.</li><li>Sem o recurso: faça a tarefa com o agente e, no fim, peça "liste só o que eu precisei corrigir".</li><li>Leia a skill gerada e tire o que for óbvio.</li><li>Passe pela dica 2 antes de adotar.</li></ol>
+  <div class="lb">No INEMA</div><div class="ln"><a href="https://inematds.github.io/skills-craft-v6/" target="_blank" rel="noopener">Skills v6 (curso) ↗</a><a href="https://eventos.inema.pro/skills/" target="_blank" rel="noopener">Área Skills ↗</a></div>
+</article></div>
+</div><div class="camada" id="c-modelo">
+  <div class="cab"><figure class="ill"><img src="assets/c2-modelo.jpg" alt="Painel com um único seletor de modelo travado e um botão de esforço girando de alto para médio" loading="lazy"></figure><div><span class="rot">Camada 2</span><h3>Modelo e configurações</h3><p>Escolha um modelo, fique nele e use o esforço como alavanca.</p></div></div>
+  <div class="dicas"><article class="dica" id="d4">
+  <div class="top"><span class="n">4</span><h4>Trocar de modelo custa cache</h4><span class="st ok">confirmado na 2.1.303</span></div>
+  <code class="cmd">/model</code>
+  <div class="lb">O que mudou</div><p>Cada modelo guarda o próprio cache da conversa. Trocar no meio faz o histórico inteiro ser lido de novo, sem desconto, e de novo na volta. Modelo menor também pode precisar de mais tentativas: barato por token não é barato por tarefa.</p>
+  <div class="lb">Como implementar</div><ol><li>Escolha o modelo no começo do trabalho e fique nele.</li><li>Pergunta fácil no meio? Peça "resposta rápida, sem pensar muito" em vez de trocar.</li><li>Precisa de outro modelo? Abra outra sessão para aquela tarefa.</li><li>Fique de olho no consumo com /context e /usage.</li></ol>
+  <div class="lb">No INEMA</div><div class="ln"><a href="https://inematds.github.io/cccache/" target="_blank" rel="noopener">cccache (curso) ↗</a><a href="https://inematds.github.io/5-mods/guia/" target="_blank" rel="noopener">5-mods · Cache Keeper ↗</a></div>
+</article><article class="dica" id="d5">
+  <div class="top"><span class="n">5</span><h4>Esforço é a alavanca</h4><span class="st ok">confirmado na 2.1.303</span></div>
+  <code class="cmd">claude --effort medium</code>
+  <div class="lb">O que mudou</div><p>Em vez de descer de modelo, baixe o esforço. Esforço alto não é sempre melhor: o modelo pode pensar demais e gastar à toa.</p>
+  <div class="lb">Como implementar</div><ol><li>Deixe o esforço padrão para a maior parte do trabalho.</li><li>Tarefa simples e repetitiva: esforço baixo.</li><li>Só suba quando um problema difícil travar, e volte depois.</li><li>Para a sessão toda: claude --effort low|medium|high.</li></ol>
+  <div class="lb">No INEMA</div><div class="ln"><a href="https://inematds.github.io/maestro-roteador/guia/" target="_blank" rel="noopener">Maestro Roteador ↗</a><a href="https://inematds.github.io/stickshift/guia/" target="_blank" rel="noopener">StickShift ↗</a></div>
+</article><article class="dica" id="d6">
+  <div class="top"><span class="n">6</span><h4>Advisor: o forte só quando precisa</h4><span class="st ok">confirmado na 2.1.303</span></div>
+  <code class="cmd">/advisor</code>
+  <div class="lb">O que mudou</div><p>Um modelo mais barato faz o trabalho e consulta um mais forte só nas decisões difíceis: antes de escolher o caminho, quando o mesmo erro volta e antes de dizer que terminou. Ligar o advisor não quebra o cache da sessão.</p>
+  <div class="lb">Como implementar</div><ol><li>Numa sessão em modelo médio, ligue o advisor com o modelo forte.</li><li>Deixe o agente decidir quando consultar.</li><li>Recurso experimental: veja se compensa no seu plano.</li><li>Em assinatura, ficar num modelo só costuma ser o mais simples.</li></ol>
+  <div class="lb">No INEMA</div><div class="ln"><a href="https://inematds.github.io/deepclaudex/" target="_blank" rel="noopener">DeepClaudeX (curso) ↗</a><a href="https://inematds.github.io/maestro-roteador/guia/" target="_blank" rel="noopener">Maestro Roteador ↗</a></div>
+</article><article class="dica" id="d7">
+  <div class="top"><span class="n">7</span><h4>Os padrões melhoraram</h4><span class="st ok">confirmado na 2.1.303</span></div>
+  <code class="cmd">/config</code>
+  <div class="lb">O que mudou</div><p>Modelo, esforço, permissões e o ponto de compactar já vêm ajustados para cada modelo. Quem mexe em tudo "para melhorar" costuma piorar.</p>
+  <div class="lb">Como implementar</div><ol><li>Comece com os padrões.</li><li>Só mude uma configuração quando algo der errado, e anote o motivo.</li><li>Mudou? Meça antes e depois (dica 2 vale aqui também).</li><li>Revise o que você mudou há meses: talvez já não precise.</li></ol>
+  <div class="lb">No INEMA</div><div class="ln"><a href="https://inematds.github.io/faxina-agentes/guia/" target="_blank" rel="noopener">faxina-agentes ↗</a><a href="https://inematds.github.io/curso-ablacao/" target="_blank" rel="noopener">Auditoria de Ablação ↗</a></div>
+</article></div>
+</div><div class="camada" id="c-prova">
+  <div class="cab"><figure class="ill"><img src="assets/c3-prova.jpg" alt="Robô de visor preto entregando uma caixa a um inspetor que confere com uma lupa e um selo verde" loading="lazy"></figure><div><span class="rot">Camada 3</span><h3>Plano e prova</h3><p>O plano é para você aprovar. A prova é para ninguém precisar acreditar.</p></div></div>
+  <div class="dicas"><article class="dica" id="d8">
+  <div class="top"><span class="n">8</span><h4>Plano é para o humano</h4><span class="st ok">confirmado na 2.1.303</span></div>
+  <code class="cmd">Shift+Tab · --permission-mode plan</code>
+  <div class="lb">O que mudou</div><p>O modelo já planeja bem sem o modo de plano. O que continua valendo é o plano para você: definir o objetivo, os limites e o que conta como pronto. Mudar um plano é muito mais barato que desfazer cem linhas.</p>
+  <div class="lb">Como implementar</div><ol><li>Trabalho grande ou confuso: peça que o agente te entreviste e grave o plano num arquivo.</li><li>Comece a construção numa sessão nova, lendo esse arquivo.</li><li>Trabalho que cabe num parágrafo: pule o plano, escreva só objetivo, pronto e limites.</li><li>Quer travar edições até aprovar? Aí o modo de plano ainda ajuda.</li></ol>
+  <div class="lb">No INEMA</div><div class="ln"><a href="https://inematds.github.io/execucao-longa/guia/" target="_blank" rel="noopener">Execução Longa ↗</a><a href="https://inematds.github.io/promptwargame/guia/" target="_blank" rel="noopener">War Game Prompt ↗</a></div>
+</article><article class="dica" id="d9">
+  <div class="top"><span class="n">9</span><h4>/goal precisa de prova</h4><span class="st ok">confirmado na 2.1.303</span></div>
+  <code class="cmd">/goal &lt;condição com prova&gt;</code>
+  <div class="lb">O que mudou</div><p>O /goal faz o agente continuar até cumprir uma condição. Mas quem confere lê só a conversa: não abre arquivo nem roda teste. Se o agente disser "terminei", ele acredita.</p>
+  <div class="lb">Como implementar</div><ol><li>Antes, peça ao agente um script de checagem com regras objetivas (ex.: checa.sh).</li><li>Escreva a condição com prova: "checa.sh passa e você mostra a saída".</li><li>Inclua o que não pode mudar e um limite de voltas.</li><li>Exemplo: /goal checa.sh passa e a saída aparece aqui; o modelo fica igual; pare em 15 voltas.</li></ol>
+  <div class="lb">No INEMA</div><div class="ln"><a href="https://inematds.github.io/execucao-longa/guia/" target="_blank" rel="noopener">Execução Longa ↗</a><a href="https://inematds.github.io/5-mods/guia/" target="_blank" rel="noopener">5-mods · Goal Meter ↗</a></div>
+</article><article class="dica" id="d10">
+  <div class="top"><span class="n">10</span><h4>Hook que confere antes de parar</h4><span class="st conferir">conferir na sua versão</span></div>
+  <code class="cmd">hook Stop · type prompt | agent</code>
+  <div class="lb">O que mudou</div><p>Hook roda sempre, no momento certo, sem depender da boa vontade do modelo. Agora o hook pode ser um prompt ou um agente: quando o Claude tenta parar, outro modelo olha o trabalho e diz "pode" ou "não pode, porque…". O motivo volta como próxima instrução.</p>
+  <div class="lb">Como implementar</div><ol><li>Peça ao próprio Claude: "adicione um hook de Stop que confira X antes de deixar parar".</li><li>Tipo prompt: lê só a conversa, rápido e barato.</li><li>Tipo agente: abre arquivos e confere de verdade (experimental).</li><li>Use para regra que não pode falhar: "nunca mandar e-mail ao cliente, só rascunho".</li></ol>
+  <div class="lb">No INEMA</div><div class="ln"><a href="https://inematds.github.io/cchooks/" target="_blank" rel="noopener">Automação &amp; Hooks (curso) ↗</a><a href="https://inematds.github.io/inema-mods/guia/" target="_blank" rel="noopener">inema-mods ↗</a></div>
+</article></div>
+</div><div class="camada" id="c-contexto">
+  <div class="cab"><figure class="ill"><img src="assets/c4-contexto.jpg" alt="Arquivo com gavetas pequenas etiquetadas por ícones e um robô puxando só uma delas" loading="lazy"></figure><div><span class="rot">Camada 4</span><h3>Contexto e delegação</h3><p>Janela grande não é memória boa. Guarde em arquivos e delegue certo.</p></div></div>
+  <div class="dicas"><article class="dica" id="d11">
+  <div class="top"><span class="n">11</span><h4>Contexto gigante perde detalhe</h4><span class="st ok">confirmado na 2.1.303</span></div>
+  <code class="cmd">/context · /clear · /compact</code>
+  <div class="lb">O que mudou</div><p>Ter um milhão de tokens de espaço não quer dizer lembrar de tudo. Testes de recuperação mostram que a taxa de acerto cai quando o contexto enche. Mais janela é mais lugar para perder detalhe.</p>
+  <div class="lb">Como implementar</div><ol><li>Guarde o contexto reutilizável em arquivos pequenos, em pastas.</li><li>No CLAUDE.md, ponha só ponteiros: "para X, leia pasta/x.md".</li><li>Trabalho longo: grave um handoff, dê /clear e retome com /prime.</li><li>Use /context para ver o que está ocupando espaço.</li></ol>
+  <div class="lb">No INEMA</div><div class="ln"><a href="https://inematds.github.io/skillmanager3x/guia/" target="_blank" rel="noopener">skillmanager3x ↗</a><a href="https://inematds.github.io/agente-claude-codex/guia/" target="_blank" rel="noopener">agente-claude-codex ↗</a><a href="https://inematds.github.io/camada-contexto/guia/" target="_blank" rel="noopener">camada-contexto ↗</a></div>
+</article><article class="dica" id="d12">
+  <div class="top"><span class="n">12</span><h4>Subagente ou fork</h4><span class="st ok">confirmado na 2.1.303</span></div>
+  <code class="cmd">subagente · fork</code>
+  <div class="lb">O que mudou</div><p>Subagente começa do zero, recebe só o que você passa e devolve só o resultado: deixa a conversa principal limpa. Fork é uma cópia da conversa: sabe tudo o que foi dito e aproveita o mesmo cache. O Claude já escolhe entre os dois sozinho.</p>
+  <div class="lb">Como implementar</div><ol><li>Tarefa isolada (gerar uma imagem, buscar um dado): subagente.</li><li>Tarefa paralela que precisa de todo o histórico: fork.</li><li>Deixe o Claude escolher; peça fork só quando souber que precisa do histórico.</li><li>Lembre: subagente pode não ler o seu CLAUDE.md. Passe as regras no pedido.</li></ol>
+  <div class="lb">No INEMA</div><div class="ln"><a href="https://inematds.github.io/subagentes/" target="_blank" rel="noopener">Subagentes (curso) ↗</a><a href="https://inematds.github.io/agenteexecuta/guia/" target="_blank" rel="noopener">Arquiteto de Execução ↗</a></div>
+</article><article class="dica" id="d13">
+  <div class="top"><span class="n">13</span><h4>Workflows de vários agentes</h4><span class="st ok">confirmado na 2.1.303</span></div>
+  <code class="cmd">/config → Dynamic workflow size</code>
+  <div class="lb">O que mudou</div><p>Para pesquisa de verdade, o Claude monta um fluxo com vários agentes que buscam por ângulos diferentes, cruzam as fontes e descartam o que não se sustenta antes de você ver.</p>
+  <div class="lb">Como implementar</div><ol><li>Use só quando a tarefa pede: pesquisa, comparação, verificação cruzada.</li><li>Antes, em /config, ponha o tamanho do workflow em pequeno (menos de cinco agentes).</li><li>Defina o que conta como resposta boa e as fontes aceitas.</li><li>Confira o custo depois da primeira rodada.</li></ol>
+  <div class="lb">No INEMA</div><div class="ln"><a href="https://inematds.github.io/7conselho/guia/" target="_blank" rel="noopener">7conselho ↗</a><a href="https://inematds.github.io/storm-research/" target="_blank" rel="noopener">STORM Research (curso) ↗</a><a href="https://inematds.github.io/multiagentes/" target="_blank" rel="noopener">Multiagentes (curso) ↗</a></div>
+</article></div>
+</div><div class="camada" id="c-sem-voce">
+  <div class="cab"><figure class="ill"><img src="assets/c5-sem-voce.jpg" alt="Escritório à noite com o notebook fechado e, numa tela grande na parede, robôs trabalhando numa sala de servidores" loading="lazy"></figure><div><span class="rot">Camada 5</span><h3>Rodando sem você</h3><p>Com verificação garantida, o trabalho pode rodar com o computador desligado.</p></div></div>
+  <div class="dicas"><article class="dica" id="d14">
+  <div class="top"><span class="n">14</span><h4>Rotinas que acordam com um evento</h4><span class="st ok">confirmado na 2.1.303</span></div>
+  <code class="cmd">/schedule (ou /routines)</code>
+  <div class="lb">O que mudou</div><p>Rotinas rodam o Claude na nuvem. Além do horário, podem começar por um pedido web ou um evento do GitHub, como um pull request novo. Qualquer sistema que mande um pedido para a URL dispara o agente.</p>
+  <div class="lb">Como implementar</div><ol><li>Crie a rotina com nome, pedido, repositório e gatilho.</li><li>Gatilho por API (confira na sua versão): você recebe uma URL e um token. Guarde o token como senha.</li><li>Deixe só os conectores que essa rotina usa.</li><li>Ponha a verificação (dicas 9 e 10) antes de deixar rodar sozinha.</li></ol>
+  <div class="lb">No INEMA</div><div class="ln"><a href="https://inematds.github.io/loop-r/guia/" target="_blank" rel="noopener">LOOP-R ↗</a><a href="https://eventos.inema.pro/rsi/" target="_blank" rel="noopener">Área RSI ↗</a></div>
+</article><article class="dica" id="d15">
+  <div class="top"><span class="n">15</span><h4>Sessões na nuvem</h4><span class="st ok">confirmado na 2.1.303</span></div>
+  <code class="cmd">claude --cloud  ·  claude --teleport</code>
+  <div class="lb">O que mudou</div><p>Cada tarefa ganha uma máquina na nuvem. Você abre várias, fecha o notebook e elas continuam. Depois puxa a sessão inteira de volta para o seu computador.</p>
+  <div class="lb">Como implementar</div><ol><li>Comece com claude --cloud "descrição da tarefa".</li><li>Acompanhe pelo navegador ou pelo app.</li><li>Traga de volta com claude --teleport.</li><li>Confira se o seu plano retoma a tarefa sozinho quando o limite de uso renova: se sim, ela gasta a próxima janela sem perguntar.</li></ol>
+  <div class="lb">No INEMA</div><div class="ln"><a href="https://inematds.github.io/oswork-v62/" target="_blank" rel="noopener">OSWork v6.2 ↗</a><a href="https://inematds.github.io/execucao-longa/guia/" target="_blank" rel="noopener">Execução Longa ↗</a></div>
+</article></div>
+</div>
+</div></section>
+<section id="kit"><div class="wrap">
+  <span class="chip">Kit para baixar</span><h2>Kit 15 Comandos</h2><p class="sub">Um .zip com modelos prontos para copiar: skill de correções, roteiro de avaliação com e sem skill, /goal com prova, script de checagem, hook de Stop, handoff, ponteiros de contexto e a cola dos 15 comandos.</p>
+  <div class="dl"><a class="btn" href="https://github.com/inematds/kit-15-comandos/releases/download/kit-v1.0.0/kit-15-comandos.zip">⬇ Baixar o kit (.zip)</a><a class="btn ghost" href="https://github.com/inematds/kit-15-comandos/tree/main/kit" target="_blank" rel="noopener">Ver os arquivos no GitHub</a></div>
+  <h3 style="margin:0 0 12px">O que vem no kit</h3><ul class="arq"><li><code>00-COLA-15-COMANDOS.md</code><span>os 15 comandos numa página</span></li><li><code>01-skill-enxuta/</code><span>modelo de SKILL.md só com correções</span></li><li><code>02-avaliar-skill/</code><span>casos e roteiro com e sem skill</span></li><li><code>03-modelo-e-esforco.md</code><span>quando trocar, quando baixar o esforço</span></li><li><code>04-goal-com-prova/</code><span>/goal pronto + checa.sh de exemplo</span></li><li><code>05-plano-curto.md</code><span>objetivo, pronto e limites em 10 linhas</span></li><li><code>06-contexto/</code><span>handoff e CLAUDE.md só de ponteiros</span></li><li><code>07-stop-hook/</code><span>hook que confere antes de parar</span></li><li><code>08-delegar.md</code><span>subagente, fork ou workflow</span></li><li><code>09-rotina-evento/</code><span>rotina por webhook com cuidados</span></li></ul>
+  <h3 style="margin:30px 0 12px">Três modelos para copiar agora</h3><div class="modelos"><div class="box"><span class="chip">Dica 9</span><h3>/goal com prova</h3><p>Cole na sessão depois de criar o checa.sh.</p><pre id="m0">/goal o script ./checa.sh termina com código 0 e você cola a saída completa aqui; nada fora da pasta src/ foi alterado; pare depois de 15 voltas e diga o que faltou</pre>
+      <button class="btn copy" data-alvo="m0">Copiar</button></div><div class="box"><span class="chip">Dica 1</span><h3>Skill só de correções</h3><p>Estrutura mínima de uma skill que vale a pena.</p><pre id="m1">---
+name: relatorio-semanal
+description: Relatório semanal de vendas da loja. Use quando pedirem o relatório da semana.
+---
+
+# Só o que o agente erra sem esta skill
+- Os números vêm de dados/vendas.csv, nunca da memória.
+- Semana = segunda a domingo (não domingo a sábado).
+- Devolução entra como venda negativa, não some.
+- Nomes de produto como estão na planilha, sem traduzir.
+- Fecho sempre com 3 ações para a próxima semana.</pre>
+      <button class="btn copy" data-alvo="m1">Copiar</button></div><div class="box"><span class="chip">Dica 10</span><h3>Pedido do hook de Stop</h3><p>Peça ao próprio Claude para montar o hook.</p><pre id="m2">Adicione um hook de Stop neste projeto. Quando você tentar parar, um verificador deve: (1) ler o docs/padrao.md, (2) ler o último arquivo em relatorios/, (3) responder se o relatório quebra alguma regra do padrão. Se quebrar, você continua corrigindo. Mostre o trecho do settings.json antes de gravar.</pre>
+      <button class="btn copy" data-alvo="m2">Copiar</button></div></div>
+</div></section>
+<section id="cuidados"><div class="wrap">
+  <span class="chip">Outras considerações</span><h2>Antes de sair mudando tudo</h2>
+  <div class="grid g3" style="margin-top:18px"><div class="card"><h3>🔎 Confira na sua versão</h3><p>Recursos novos mudam de nome e saem do experimental. Rode claude --help e /help antes de seguir uma receita. O selo de cada dica diz o que conferimos aqui.</p></div><div class="card"><h3>💳 Assinatura × API</h3><p>Em assinatura o que pesa é o limite de uso; na API é a conta. Advisor e troca de modelo fazem sentido diferente em cada caso.</p></div><div class="card"><h3>🧪 Experimental é experimental</h3><p>Advisor e hook do tipo agente ainda podem mudar. Use em projeto de teste antes do principal.</p></div><div class="card"><h3>🔐 Gatilho é porta aberta</h3><p>A URL e o token de uma rotina disparam o agente. Trate como senha, limite os conectores e ponha teto de gasto.</p></div><div class="card"><h3>📏 Meça, não acredite</h3><p>Vale para skill, configuração e para este guia. Compare antes e depois com a mesma tarefa.</p></div><div class="card"><h3>🗂️ Contexto ainda é seu</h3><p>Nenhum recurso novo substitui saber o que o agente precisa ler. Pastas pequenas e ponteiros continuam sendo o melhor investimento.</p></div></div>
+</div></section>
+<section id="kits"><div class="wrap">
+  <span class="chip">Próximos kits</span><h2>Kits que podemos criar</h2><p class="sub">Propostas para a comunidade, cada uma ligada a um projeto que já temos. Ainda não estão prontas.</p>
+  <div class="grid g3"><div class="card kitf"><h3>Kit Skill Enxuta</h3><p>Roda cada skill instalada com e sem, mostra a nota e sugere o que cortar.</p><p class="eixo">↳ Auditar Skills · Ablação</p></div><div class="card kitf"><h3>Kit Prova de Pronto</h3><p>Gera o checa.sh a partir do pedido e monta o /goal com prova e limite de voltas.</p><p class="eixo">↳ Execução Longa</p></div><div class="card kitf"><h3>Kit Handoff Verificado</h3><p>Hook que confere o handoff contra os arquivos reais antes do /clear.</p><p class="eixo">↳ skillmanager3x · /prime</p></div><div class="card kitf"><h3>Kit Verificador de Stop</h3><p>Biblioteca de hooks de Stop por tipo de trabalho: relatório, código, post, vídeo.</p><p class="eixo">↳ cchooks · inema-mods</p></div><div class="card kitf"><h3>Kit Delegar Certo</h3><p>Regra prática de subagente, fork e workflow, com teto de agentes e custo.</p><p class="eixo">↳ OSWork · Arquiteto de Execução</p></div><div class="card kitf"><h3>Kit Agente por Evento</h3><p>Rotina que acorda com webhook (pedido novo, mensagem, PR) para negócios.</p><p class="eixo">↳ LOOP-R · agentes comerciais</p></div><div class="card kitf"><h3>Kit Config Limpa</h3><p>Compara o seu settings com o padrão e lista o que mudou sem motivo.</p><p class="eixo">↳ faxina-agentes</p></div></div>
+</div></section>
+<section id="comunidade"><div class="wrap">
+  <span class="chip">Na comunidade</span><h2>O que o INEMA já tem sobre isso</h2><p class="sub">Cursos, guias e kits abertos que aprofundam cada camada.</p>
+  <div class="grupos"><div class="box grupo"><h3>Skills</h3><a href="https://eventos.inema.pro/skills/" target="_blank" rel="noopener">Área Skills ↗</a><a href="https://inematds.github.io/skills-craft-v6/" target="_blank" rel="noopener">Skills v6 ↗</a><a href="https://inematds.github.io/auditar-skills/guia/" target="_blank" rel="noopener">Auditar Skills ↗</a><a href="https://inematds.github.io/curso-ablacao/" target="_blank" rel="noopener">Auditoria de Ablação ↗</a></div><div class="box grupo"><h3>Modelo e custo</h3><a href="https://inematds.github.io/cccache/" target="_blank" rel="noopener">cccache ↗</a><a href="https://inematds.github.io/5-mods/guia/" target="_blank" rel="noopener">5-mods ↗</a><a href="https://inematds.github.io/maestro-roteador/guia/" target="_blank" rel="noopener">Maestro Roteador ↗</a><a href="https://inematds.github.io/faxina-agentes/guia/" target="_blank" rel="noopener">faxina-agentes ↗</a></div><div class="box grupo"><h3>Plano, prova e hooks</h3><a href="https://inematds.github.io/execucao-longa/guia/" target="_blank" rel="noopener">Execução Longa ↗</a><a href="https://eventos.inema.pro/execucao-longa/" target="_blank" rel="noopener">Área Execução Longa ↗</a><a href="https://inematds.github.io/cchooks/" target="_blank" rel="noopener">Automação &amp; Hooks ↗</a><a href="https://inematds.github.io/inema-mods/guia/" target="_blank" rel="noopener">inema-mods ↗</a></div><div class="box grupo"><h3>Contexto e delegação</h3><a href="https://inematds.github.io/skillmanager3x/guia/" target="_blank" rel="noopener">skillmanager3x ↗</a><a href="https://inematds.github.io/agente-claude-codex/guia/" target="_blank" rel="noopener">agente-claude-codex ↗</a><a href="https://inematds.github.io/subagentes/" target="_blank" rel="noopener">Subagentes ↗</a><a href="https://inematds.github.io/7conselho/guia/" target="_blank" rel="noopener">7conselho ↗</a></div><div class="box grupo"><h3>Rodando sem você</h3><a href="https://eventos.inema.pro/oswork/" target="_blank" rel="noopener">OSWork ↗</a><a href="https://inematds.github.io/oswork-v62/" target="_blank" rel="noopener">OSWork v6.2 ↗</a><a href="https://inematds.github.io/loop-r/guia/" target="_blank" rel="noopener">LOOP-R ↗</a><a href="https://eventos.inema.pro/mods/" target="_blank" rel="noopener">Área Mods ↗</a></div></div>
+</div></section>
+
+<section id="fim"><div class="wrap">
+  <span class="chip">Para lembrar</span><h2>Menos instrução, mais prova</h2>
+  <div class="two" style="align-items:center;margin-top:18px"><figure class="ill"><img src="assets/c6-fim.jpg" alt="Robô de visor preto e uma pessoa diante de um quadro com três ícones: pasta, engrenagem e selo de verificado" loading="lazy"></figure><div class="box"><table class="cola"><tr><td>Skill</td><td>só o que ele erra</td></tr><tr><td>Modelo</td><td>escolha um e fique</td></tr><tr><td>Prova</td><td>teste, arquivo, verificador</td></tr><tr><td>Contexto</td><td>arquivos pequenos e ponteiros</td></tr><tr><td>Sem você</td><td>só depois da verificação</td></tr></table></div></div>
+  <p class="tip" style="margin-top:22px"><strong>O avanço não é dar mais autonomia ao agente. É ele trabalhar com menos instrução, gastar menos contexto e provar que terminou.</strong></p>
+</div></section>
+
+<footer>
+  <div class="wrap">
+    <div class="pill">Claude Code</div><div class="pill">Codex</div><div class="pill">Agentes</div><div class="pill">Grátis</div>
+    <p style="margin-top:18px">Kit 15 Comandos · guia e kit abertos e gratuitos · <a href="https://github.com/inematds/kit-15-comandos">inematds/kit-15-comandos</a> · <a href="https://inema.club">INEMA.CLUB</a></p>
+  </div>
+</footer>
+<script>
+  (function(){
+    var KEY='kit-15-comandos-theme', b=document.body, tg=document.getElementById('themeToggle');
+    try{ if(localStorage.getItem(KEY)==='light'){ b.classList.add('light'); tg.textContent='☀️'; } }catch(e){}
+    tg.addEventListener('click',function(){ var light=b.classList.toggle('light'); tg.textContent=light?'☀️':'🌙'; try{ localStorage.setItem(KEY, light?'light':'dark'); }catch(e){} });
+    document.querySelectorAll('.copy').forEach(function(bt){
+      bt.addEventListener('click',function(){
+        var txt=document.getElementById(bt.dataset.alvo).innerText;
+        (navigator.clipboard?navigator.clipboard.writeText(txt):Promise.reject()).then(function(){ var o=bt.textContent; bt.textContent='Copiado ✓'; setTimeout(function(){bt.textContent=o;},1600); }).catch(function(){});
+      });
+    });
+  })();
+</script>
+</body>
+</html>

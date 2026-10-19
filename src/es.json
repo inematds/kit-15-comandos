@@ -1,0 +1,774 @@
+{
+ "lang": "es",
+ "title": "Kit de 15 comandos",
+ "tagline": "menos instrucciones, más pruebas",
+ "meta": "Claude Code cambió: 15 comandos y funciones para trabajar con menos instrucciones, usar menos tokens y demostrar que el trabajo terminó. Cómo implementar cada uno, un kit para descargar y lo que la comunidad INEMA ya tiene. Gratis, de INEMA.CLUB.",
+ "nav": {
+  "tese": "Tesis",
+  "dicas": "15 consejos",
+  "kit": "Kit",
+  "cuidados": "Precauciones",
+  "kits": "Próximos kits",
+  "comunidade": "Comunidad",
+  "video": "Video",
+  "github": "GitHub",
+  "tema": "Cambiar tema"
+ },
+ "hero": {
+  "chip": "Claude Code · Codex · agentes",
+  "h1": "Claude cambió. <span class=\"amb\">15 comandos</span> para dominar",
+  "lead": "Los modelos ya son lo bastante buenos como para prescindir de muchas instrucciones largas. Ahora el juego es otro: dar el contexto adecuado, dejar que el agente trabaje y exigir pruebas de que terminó.",
+  "cta1": "Ver los 15 consejos",
+  "cta2": "Descargar el kit (.zip)",
+  "alt": "Banner: robot humanoide de visor negro trabajando en una mesa con quince tarjetas luminosas"
+ },
+ "resumo_chip": "En resumen",
+ "resumo": "Esta es una guía gratis para quienes usan Claude Code (y casi todo también sirve para Codex y otros agentes). Son 15 cambios en cinco capas: skills, modelo y configuración, plan y pruebas, contexto y delegación, y trabajo en marcha sin ti. Para cada uno verás qué cambió, cómo implementarlo con el comando exacto y qué tiene ya la comunidad INEMA sobre el tema. Al final hay un kit para descargar, con plantillas listas, y una lista de los próximos kits que vamos a crear.",
+ "tese": {
+  "chip": "La tesis",
+  "h2": "Del prompt detallado al contexto, la ejecución y las pruebas",
+  "sub": "Antes escribíamos trescientas líneas para enseñarle al agente a trabajar. Hoy ya sabe hacerlo. Lo que no sabe es tu contexto, y nadie garantiza que haya terminado si no pides pruebas.",
+  "alt_grade": "Banner en cuadrícula: skills, modelo, pruebas, contexto, delegación, sin ti",
+  "cards": [
+   [
+    "🧭",
+    "Contexto",
+    "Dale al agente solo lo que no puede descubrir por sí mismo: tu negocio, tus reglas y dónde están las cosas. Guárdalo en archivos pequeños que se consultan cuando hacen falta."
+   ],
+   [
+    "⚙️",
+    "Ejecución",
+    "Deja que el agente trabaje, delegue y continúe. Los valores predeterminados mejoraron; cambiarlo todo suele empeorar las cosas."
+   ],
+   [
+    "✅",
+    "Verificación",
+    "«Terminé» no es una prueba. Hace falta una prueba aprobada, un archivo generado y un verificador que revise antes de permitir que se detenga."
+   ]
+  ]
+ },
+ "status": {
+  "ok": "confirmado en la 2.1.303",
+  "conferir": "compruébalo en tu versión"
+ },
+ "dicas_chip": "Los 15 consejos",
+ "dicas_h2": "Cinco capas, quince cambios",
+ "dicas_sub": "Cada consejo tiene tres partes: qué cambió, cómo implementarlo y qué existe ya en INEMA. La etiqueta indica si comprobamos el comando en nuestra instalación o si debes comprobarlo en la tuya.",
+ "rot_mudou": "Qué cambió",
+ "rot_como": "Cómo implementarlo",
+ "rot_inema": "En INEMA",
+ "camadas": [
+  {
+   "id": "c-skills",
+   "nome": "Skills",
+   "img": "c1-skills.jpg",
+   "img_alt": "Robot de visor negro frente a un enorme manual cerrado y, a su lado, una pequeña tarjeta con tres líneas",
+   "intro": "La skill deja de ser un manual y se convierte en una lista de correcciones.",
+   "dicas": [
+    {
+     "n": 1,
+     "titulo": "Skills más pequeñas",
+     "cmd": "SKILL.md breve",
+     "st": "ok",
+     "mudou": "El modelo ya escribe bien, organiza la información y evita el texto robótico sin recetas. Una skill larga repite lo que ya sabe y ocupa contexto. Solo debe guardar lo que hace mal y el conocimiento que solo tú tienes.",
+     "como": [
+      "Haz la tarea sin ninguna skill, en una sesión limpia.",
+      "Anota solo lo que salió mal o fue distinto de cómo lo haces tú.",
+      "La skill se convierte en esta lista: correcciones, nombres, rutas y excepciones de tu negocio.",
+      "Revísala cada vez que cambies de modelo: quita de la skill lo que ahora hace bien."
+     ],
+     "inema": [
+      [
+       "Skills v6 (curso)",
+       "https://inematds.github.io/skills-craft-v6/"
+      ],
+      [
+       "Crear Agent Skills",
+       "https://inematds.github.io/skills-craft/"
+      ]
+     ]
+    },
+    {
+     "n": 2,
+     "titulo": "Evalúa con y sin la skill",
+     "cmd": "claude plugin eval --ablation with-without",
+     "st": "ok",
+     "mudou": "Una buena skill mejora el resultado. La comparación es sencilla: la misma tarea con la skill y sin ella. Si no mejora, recórtala o elimínala.",
+     "como": [
+      "Escribe de 3 a 5 casos reales de la tarea e indica qué cuenta como un buen resultado.",
+      "Ejecuta la misma tarea con la skill y sin ella (la evaluación del plugin ya se encarga de la versión «sin»).",
+      "Compara la puntuación: si baja o empata, recorta líneas; si sigue empatando, elimínala.",
+      "Guarda los casos: serán la prueba de la próxima versión de la skill."
+     ],
+     "inema": [
+      [
+       "Auditar Skills",
+       "https://inematds.github.io/auditar-skills/guia/"
+      ],
+      [
+       "Auditoria de Ablação (curso)",
+       "https://inematds.github.io/curso-ablacao/"
+      ],
+      [
+       "audit-ablacaocc",
+       "https://inematds.github.io/audit-ablacaocc/guia/"
+      ]
+     ]
+    },
+    {
+     "n": 3,
+     "titulo": "Graba la tarea y conviértela en una skill",
+     "cmd": "Record a skill (app desktop)",
+     "st": "conferir",
+     "mudou": "En vez de escribir la skill, haces la tarea una vez y el agente observa. Como solo registra lo que no podría saber por sí mismo, la skill queda breve.",
+     "como": [
+      "En la aplicación de escritorio, usa la grabación de skills y haz la tarea como siempre.",
+      "Si no tienes esa función: haz la tarea con el agente y al final pídele «enumera solo lo que tuve que corregir».",
+      "Lee la skill generada y quita lo obvio.",
+      "Sigue el consejo 2 antes de adoptarla."
+     ],
+     "inema": [
+      [
+       "Skills v6 (curso)",
+       "https://inematds.github.io/skills-craft-v6/"
+      ],
+      [
+       "Área de Skills",
+       "https://eventos.inema.pro/skills/"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c-modelo",
+   "nome": "Modelo y configuración",
+   "img": "c2-modelo.jpg",
+   "img_alt": "Panel con un único selector de modelo bloqueado y un botón de esfuerzo que baja de alto a medio",
+   "intro": "Elige un modelo, quédate con él y usa el nivel de esfuerzo como palanca.",
+   "dicas": [
+    {
+     "n": 4,
+     "titulo": "Cambiar de modelo cuesta caché",
+     "cmd": "/model",
+     "st": "ok",
+     "mudou": "Cada modelo guarda su propia caché de la conversación. Cambiar a mitad de camino obliga a volver a leer todo el historial, sin descuento, y otra vez al regresar. Un modelo más pequeño también puede necesitar más intentos: que sea barato por token no significa que sea barato por tarea.",
+     "como": [
+      "Elige el modelo al empezar el trabajo y quédate con él.",
+      "¿Una pregunta fácil a mitad de camino? Pide «una respuesta rápida, sin pensarlo demasiado» en vez de cambiar de modelo.",
+      "¿Necesitas otro modelo? Abre otra sesión para esa tarea.",
+      "Vigila el consumo con /context y /usage."
+     ],
+     "inema": [
+      [
+       "cccache (curso)",
+       "https://inematds.github.io/cccache/"
+      ],
+      [
+       "5-mods · Cache Keeper",
+       "https://inematds.github.io/5-mods/guia/"
+      ]
+     ]
+    },
+    {
+     "n": 5,
+     "titulo": "El esfuerzo es la palanca",
+     "cmd": "claude --effort medium",
+     "st": "ok",
+     "mudou": "En vez de cambiar a un modelo inferior, baja el nivel de esfuerzo. Un esfuerzo alto no siempre es mejor: el modelo puede pensar demasiado y gastar de más.",
+     "como": [
+      "Deja el esfuerzo predeterminado para la mayor parte del trabajo.",
+      "Tarea sencilla y repetitiva: esfuerzo bajo.",
+      "Súbelo solo cuando un problema difícil te atasque y luego vuelve a bajarlo.",
+      "Para toda la sesión: claude --effort low|medium|high."
+     ],
+     "inema": [
+      [
+       "Maestro Roteador",
+       "https://inematds.github.io/maestro-roteador/guia/"
+      ],
+      [
+       "StickShift",
+       "https://inematds.github.io/stickshift/guia/"
+      ]
+     ]
+    },
+    {
+     "n": 6,
+     "titulo": "Advisor: usa el modelo potente solo cuando hace falta",
+     "cmd": "/advisor",
+     "st": "ok",
+     "mudou": "Un modelo más barato hace el trabajo y consulta a uno más potente solo en decisiones difíciles: antes de elegir el rumbo, cuando se repite el mismo error y antes de decir que terminó. Activar advisor no rompe la caché de la sesión.",
+     "como": [
+      "En una sesión con un modelo intermedio, activa advisor con el modelo potente.",
+      "Deja que el agente decida cuándo consultar.",
+      "Función experimental: comprueba si te conviene según tu plan.",
+      "Con una suscripción, suele ser más sencillo quedarse con un solo modelo."
+     ],
+     "inema": [
+      [
+       "DeepClaudeX (curso)",
+       "https://inematds.github.io/deepclaudex/"
+      ],
+      [
+       "Maestro Roteador",
+       "https://inematds.github.io/maestro-roteador/guia/"
+      ]
+     ]
+    },
+    {
+     "n": 7,
+     "titulo": "Los valores predeterminados mejoraron",
+     "cmd": "/config",
+     "st": "ok",
+     "mudou": "El modelo, el esfuerzo, los permisos y el momento de compactar ya vienen ajustados para cada modelo. Quien cambia todo «para mejorarlo» suele empeorarlo.",
+     "como": [
+      "Empieza con los valores predeterminados.",
+      "Cambia una configuración solo cuando algo salga mal y anota el motivo.",
+      "¿Hiciste un cambio? Mide antes y después (el consejo 2 también sirve aquí).",
+      "Revisa lo que cambiaste hace meses: quizá ya no haga falta."
+     ],
+     "inema": [
+      [
+       "faxina-agentes",
+       "https://inematds.github.io/faxina-agentes/guia/"
+      ],
+      [
+       "Auditoria de Ablação",
+       "https://inematds.github.io/curso-ablacao/"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c-prova",
+   "nome": "Plan y pruebas",
+   "img": "c3-prova.jpg",
+   "img_alt": "Robot de visor negro que entrega una caja a un inspector que la revisa con una lupa y un sello verde",
+   "intro": "El plan es para que tú lo apruebes. Las pruebas evitan que alguien tenga que creer a ciegas.",
+   "dicas": [
+    {
+     "n": 8,
+     "titulo": "El plan es para la persona",
+     "cmd": "Shift+Tab · --permission-mode plan",
+     "st": "ok",
+     "mudou": "El modelo ya planifica bien sin el modo de planificación. Lo que sigue siendo útil es el plan para ti: definir el objetivo, los límites y qué significa terminar. Cambiar un plan cuesta mucho menos que deshacer cien líneas.",
+     "como": [
+      "Trabajo grande o confuso: pídele al agente que te haga preguntas y guarde el plan en un archivo.",
+      "Empieza a construir en una sesión nueva, leyendo ese archivo.",
+      "Trabajo que cabe en un párrafo: omite el plan y escribe solo el objetivo, qué significa terminar y los límites.",
+      "¿Quieres bloquear los cambios hasta aprobarlos? En ese caso, el modo de planificación todavía ayuda."
+     ],
+     "inema": [
+      [
+       "Execução Longa",
+       "https://inematds.github.io/execucao-longa/guia/"
+      ],
+      [
+       "War Game Prompt",
+       "https://inematds.github.io/promptwargame/guia/"
+      ]
+     ]
+    },
+    {
+     "n": 9,
+     "titulo": "/goal necesita pruebas",
+     "cmd": "/goal <condição com prova>",
+     "st": "ok",
+     "mudou": "/goal hace que el agente continúe hasta cumplir una condición. Pero quien verifica solo lee la conversación: no abre archivos ni ejecuta pruebas. Si el agente dice «terminé», le cree.",
+     "como": [
+      "Primero, pídele al agente un script de verificación con reglas objetivas (por ejemplo, checa.sh).",
+      "Escribe la condición con pruebas: «checa.sh pasa y muestras el resultado».",
+      "Incluye lo que no puede cambiar y un límite de iteraciones.",
+      "Ejemplo: /goal checa.sh pasa y el resultado aparece aquí; el modelo no cambia; detente después de 15 iteraciones."
+     ],
+     "inema": [
+      [
+       "Execução Longa",
+       "https://inematds.github.io/execucao-longa/guia/"
+      ],
+      [
+       "5-mods · Goal Meter",
+       "https://inematds.github.io/5-mods/guia/"
+      ]
+     ]
+    },
+    {
+     "n": 10,
+     "titulo": "Hook que verifica antes de detenerse",
+     "cmd": "hook Stop · type prompt | agent",
+     "st": "conferir",
+     "mudou": "El hook se ejecuta siempre en el momento adecuado, sin depender de la voluntad del modelo. Ahora puede ser un prompt o un agente: cuando Claude intenta detenerse, otro modelo revisa el trabajo y dice «puedes parar» o «no puedes, porque…». El motivo vuelve como la siguiente instrucción.",
+     "como": [
+      "Pídele al propio Claude: «añade un hook de Stop que compruebe X antes de permitir que se detenga».",
+      "Tipo prompt: solo lee la conversación; es rápido y barato.",
+      "Tipo agente: abre archivos y verifica de verdad (experimental).",
+      "Úsalo para reglas que no pueden fallar: «nunca envíes correos al cliente; solo prepara borradores»."
+     ],
+     "inema": [
+      [
+       "Automação & Hooks (curso)",
+       "https://inematds.github.io/cchooks/"
+      ],
+      [
+       "inema-mods",
+       "https://inematds.github.io/inema-mods/guia/"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c-contexto",
+   "nome": "Contexto y delegación",
+   "img": "c4-contexto.jpg",
+   "img_alt": "Archivo con cajones pequeños etiquetados con iconos y un robot que abre solo uno",
+   "intro": "Una ventana grande no es una buena memoria. Guarda la información en archivos y delega bien.",
+   "dicas": [
+    {
+     "n": 11,
+     "titulo": "Un contexto enorme pierde detalles",
+     "cmd": "/context · /clear · /compact",
+     "st": "ok",
+     "mudou": "Tener espacio para un millón de tokens no significa recordarlo todo. Las pruebas de recuperación muestran que la precisión baja cuando se llena el contexto. Una ventana más grande también ofrece más espacio para perder detalles.",
+     "como": [
+      "Guarda el contexto reutilizable en archivos pequeños, organizados en carpetas.",
+      "En CLAUDE.md, deja solo referencias: «para X, lee carpeta/x.md».",
+      "Trabajo largo: guarda un handoff, usa /clear y retómalo con /prime.",
+      "Usa /context para ver qué está ocupando espacio."
+     ],
+     "inema": [
+      [
+       "skillmanager3x",
+       "https://inematds.github.io/skillmanager3x/guia/"
+      ],
+      [
+       "agente-claude-codex",
+       "https://inematds.github.io/agente-claude-codex/guia/"
+      ],
+      [
+       "camada-contexto",
+       "https://inematds.github.io/camada-contexto/guia/"
+      ]
+     ]
+    },
+    {
+     "n": 12,
+     "titulo": "Subagente o fork",
+     "cmd": "subagente · fork",
+     "st": "ok",
+     "mudou": "Un subagente empieza desde cero, recibe solo lo que le das y devuelve solo el resultado: así la conversación principal queda limpia. Un fork es una copia de la conversación: conoce todo lo que se dijo y aprovecha la misma caché. Claude ya elige entre los dos por su cuenta.",
+     "como": [
+      "Tarea aislada (generar una imagen, buscar un dato): subagente.",
+      "Tarea paralela que necesita todo el historial: fork.",
+      "Deja que Claude elija; pide un fork solo cuando sepas que necesitas el historial.",
+      "Recuerda: es posible que el subagente no lea tu CLAUDE.md. Incluye las reglas en la solicitud."
+     ],
+     "inema": [
+      [
+       "Subagentes (curso)",
+       "https://inematds.github.io/subagentes/"
+      ],
+      [
+       "Arquiteto de Execução",
+       "https://inematds.github.io/agenteexecuta/guia/"
+      ]
+     ]
+    },
+    {
+     "n": 13,
+     "titulo": "Flujos de trabajo con varios agentes",
+     "cmd": "/config → Dynamic workflow size",
+     "st": "ok",
+     "mudou": "Para una investigación en profundidad, Claude crea un flujo con varios agentes que buscan desde distintos ángulos, contrastan las fuentes y descartan lo que no se sostiene antes de mostrártelo.",
+     "como": [
+      "Úsalo solo cuando la tarea lo requiera: investigación, comparación o verificación cruzada.",
+      "Primero, en /config, configura el tamaño del flujo como pequeño (menos de cinco agentes).",
+      "Define qué se considera una buena respuesta y qué fuentes se aceptan.",
+      "Comprueba el costo después de la primera ronda."
+     ],
+     "inema": [
+      [
+       "7conselho",
+       "https://inematds.github.io/7conselho/guia/"
+      ],
+      [
+       "STORM Research (curso)",
+       "https://inematds.github.io/storm-research/"
+      ],
+      [
+       "Multiagentes (curso)",
+       "https://inematds.github.io/multiagentes/"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "c-sem-voce",
+   "nome": "En marcha sin ti",
+   "img": "c5-sem-voce.jpg",
+   "img_alt": "Oficina de noche, con la laptop cerrada y robots trabajando en una sala de servidores en una pantalla grande de la pared",
+   "intro": "Con la verificación garantizada, el trabajo puede seguir aunque la computadora esté apagada.",
+   "dicas": [
+    {
+     "n": 14,
+     "titulo": "Rutinas que se activan con un evento",
+     "cmd": "/schedule (ou /routines)",
+     "st": "ok",
+     "mudou": "Las rutinas ejecutan Claude en la nube. Además de programarlas por horario, pueden iniciarse con una solicitud web o un evento de GitHub, como un pull request nuevo. Cualquier sistema que envíe una solicitud a la URL activa el agente.",
+     "como": [
+      "Crea la rutina con un nombre, una solicitud, un repositorio y un activador.",
+      "Activador por API (compruébalo en tu versión): recibirás una URL y un token. Guarda el token como una contraseña.",
+      "Deja solo los conectores que use esta rutina.",
+      "Añade la verificación (consejos 9 y 10) antes de dejarla funcionar sola."
+     ],
+     "inema": [
+      [
+       "LOOP-R",
+       "https://inematds.github.io/loop-r/guia/"
+      ],
+      [
+       "Área de RSI",
+       "https://eventos.inema.pro/rsi/"
+      ]
+     ]
+    },
+    {
+     "n": 15,
+     "titulo": "Sesiones en la nube",
+     "cmd": "claude --cloud  ·  claude --teleport",
+     "st": "ok",
+     "mudou": "Cada tarea recibe una máquina en la nube. Puedes abrir varias, cerrar la laptop y ellas siguen trabajando. Después, recuperas la sesión completa en tu computadora.",
+     "como": [
+      "Empieza con claude --cloud \"descripción de la tarea\".",
+      "Sigue el progreso desde el navegador o la aplicación.",
+      "Recupérala con claude --teleport.",
+      "Comprueba si tu plan reanuda la tarea automáticamente cuando se renueva el límite de uso: si es así, consumirá el siguiente período sin preguntar."
+     ],
+     "inema": [
+      [
+       "OSWork v6.2",
+       "https://inematds.github.io/oswork-v62/"
+      ],
+      [
+       "Execução Longa",
+       "https://inematds.github.io/execucao-longa/guia/"
+      ]
+     ]
+    }
+   ]
+  }
+ ],
+ "kit": {
+  "chip": "Kit para descargar",
+  "h2": "Kit de 15 comandos",
+  "sub": "Un .zip con plantillas listas para copiar: skill de correcciones, guía de evaluación con y sin skill, /goal con pruebas, script de verificación, hook de Stop, handoff, referencias de contexto y la chuleta de los 15 comandos.",
+  "baixar": "Descargar el kit (.zip)",
+  "ver": "Ver los archivos en GitHub",
+  "copiar": "Copiar",
+  "copiado": "Copiado",
+  "arquivos_h3": "Qué incluye el kit",
+  "arquivos": [
+   [
+    "00-COLA-15-COMANDOS.md",
+    "los 15 comandos en una página"
+   ],
+   [
+    "01-skill-enxuta/",
+    "plantilla de SKILL.md solo con correcciones"
+   ],
+   [
+    "02-avaliar-skill/",
+    "casos y guía con y sin skill"
+   ],
+   [
+    "03-modelo-e-esforco.md",
+    "cuándo cambiar y cuándo bajar el esfuerzo"
+   ],
+   [
+    "04-goal-com-prova/",
+    "/goal listo + ejemplo de checa.sh"
+   ],
+   [
+    "05-plano-curto.md",
+    "objetivo, finalización y límites en 10 líneas"
+   ],
+   [
+    "06-contexto/",
+    "handoff y CLAUDE.md solo con referencias"
+   ],
+   [
+    "07-stop-hook/",
+    "hook que verifica antes de detenerse"
+   ],
+   [
+    "08-delegar.md",
+    "subagente, fork o flujo de trabajo"
+   ],
+   [
+    "09-rotina-evento/",
+    "rutina por webhook con precauciones"
+   ]
+  ],
+  "modelos_h3": "Tres plantillas para copiar ahora",
+  "modelos": [
+   {
+    "quem": "Consejo 9",
+    "titulo": "/goal com prova",
+    "p": "Pégalo en la sesión después de crear checa.sh.",
+    "txt": "/goal o script ./checa.sh termina com código 0 e você cola a saída completa aqui; nada fora da pasta src/ foi alterado; pare depois de 15 voltas e diga o que faltou"
+   },
+   {
+    "quem": "Consejo 1",
+    "titulo": "Skill solo de correcciones",
+    "p": "Estructura mínima de una skill útil.",
+    "txt": "---\nname: relatorio-semanal\ndescription: Relatório semanal de vendas da loja. Use quando pedirem o relatório da semana.\n---\n\n# Só o que o agente erra sem esta skill\n- Os números vêm de dados/vendas.csv, nunca da memória.\n- Semana = segunda a domingo (não domingo a sábado).\n- Devolução entra como venda negativa, não some.\n- Nomes de produto como estão na planilha, sem traduzir.\n- Fecho sempre com 3 ações para a próxima semana."
+   },
+   {
+    "quem": "Consejo 10",
+    "titulo": "Solicitud para el hook de Stop",
+    "p": "Pídele al propio Claude que configure el hook.",
+    "txt": "Adicione um hook de Stop neste projeto. Quando você tentar parar, um verificador deve: (1) ler o docs/padrao.md, (2) ler o último arquivo em relatorios/, (3) responder se o relatório quebra alguma regra do padrão. Se quebrar, você continua corrigindo. Mostre o trecho do settings.json antes de gravar."
+   }
+  ]
+ },
+ "cuidados": {
+  "chip": "Otras consideraciones",
+  "h2": "Antes de cambiarlo todo",
+  "itens": [
+   [
+    "🔎",
+    "Compruébalo en tu versión",
+    "Las funciones nuevas cambian de nombre y dejan de ser experimentales. Ejecuta claude --help y /help antes de seguir una guía. La etiqueta de cada consejo indica lo que comprobamos aquí."
+   ],
+   [
+    "💳",
+    "Suscripción × API",
+    "Con una suscripción, lo que cuenta es el límite de uso; con la API, el costo. Advisor y el cambio de modelo tienen sentido distinto en cada caso."
+   ],
+   [
+    "🧪",
+    "Lo experimental sigue siendo experimental",
+    "Advisor y el hook de tipo agente todavía pueden cambiar. Pruébalos en un proyecto de prueba antes de usarlos en el principal."
+   ],
+   [
+    "🔐",
+    "Un activador es una puerta abierta",
+    "La URL y el token de una rutina activan el agente. Trátalos como una contraseña, limita los conectores y establece un tope de gasto."
+   ],
+   [
+    "📏",
+    "Mide, no lo des por hecho",
+    "Esto aplica a las skills, la configuración y esta guía. Compara el antes y el después con la misma tarea."
+   ],
+   [
+    "🗂️",
+    "El contexto sigue siendo tuyo",
+    "Ninguna función nueva reemplaza saber qué necesita leer el agente. Las carpetas pequeñas y las referencias siguen siendo la mejor inversión."
+   ]
+  ]
+ },
+ "kits": {
+  "chip": "Próximos kits",
+  "h2": "Kits que podemos crear",
+  "sub": "Propuestas para la comunidad, cada una relacionada con un proyecto que ya tenemos. Todavía no están listas.",
+  "itens": [
+   [
+    "Kit de skills breves",
+    "Ejecuta cada skill instalada con y sin ella, muestra la puntuación y sugiere qué recortar.",
+    "Auditar Skills · Ablação"
+   ],
+   [
+    "Kit de pruebas de finalización",
+    "Genera checa.sh a partir de la solicitud y prepara /goal con pruebas y un límite de iteraciones.",
+    "Execução Longa"
+   ],
+   [
+    "Kit de handoff verificado",
+    "Hook que verifica el handoff contra los archivos reales antes de /clear.",
+    "skillmanager3x · /prime"
+   ],
+   [
+    "Kit de verificación de Stop",
+    "Biblioteca de hooks de Stop según el tipo de trabajo: informe, código, publicación o video.",
+    "cchooks · inema-mods"
+   ],
+   [
+    "Kit para delegar bien",
+    "Guía práctica de subagentes, forks y flujos de trabajo, con límites de agentes y costos.",
+    "OSWork · Arquiteto de Execução"
+   ],
+   [
+    "Kit de agente por evento",
+    "Rutina para empresas que se activa con un webhook (nueva solicitud, mensaje o PR).",
+    "LOOP-R · agentes comerciais"
+   ],
+   [
+    "Kit de configuración limpia",
+    "Compara tu settings con la configuración predeterminada y enumera los cambios sin motivo.",
+    "faxina-agentes"
+   ]
+  ]
+ },
+ "comunidade": {
+  "chip": "En la comunidad",
+  "h2": "Lo que INEMA ya tiene sobre el tema",
+  "sub": "Cursos, guías y kits abiertos que profundizan en cada capa.",
+  "grupos": [
+   [
+    "Skills",
+    [
+     [
+      "Área de Skills",
+      "https://eventos.inema.pro/skills/"
+     ],
+     [
+      "Skills v6",
+      "https://inematds.github.io/skills-craft-v6/"
+     ],
+     [
+      "Auditar Skills",
+      "https://inematds.github.io/auditar-skills/guia/"
+     ],
+     [
+      "Auditoria de Ablação",
+      "https://inematds.github.io/curso-ablacao/"
+     ]
+    ]
+   ],
+   [
+    "Modelo y costo",
+    [
+     [
+      "cccache",
+      "https://inematds.github.io/cccache/"
+     ],
+     [
+      "5-mods",
+      "https://inematds.github.io/5-mods/guia/"
+     ],
+     [
+      "Maestro Roteador",
+      "https://inematds.github.io/maestro-roteador/guia/"
+     ],
+     [
+      "faxina-agentes",
+      "https://inematds.github.io/faxina-agentes/guia/"
+     ]
+    ]
+   ],
+   [
+    "Plan, pruebas y hooks",
+    [
+     [
+      "Execução Longa",
+      "https://inematds.github.io/execucao-longa/guia/"
+     ],
+     [
+      "Área de Execución Longa",
+      "https://eventos.inema.pro/execucao-longa/"
+     ],
+     [
+      "Automação & Hooks",
+      "https://inematds.github.io/cchooks/"
+     ],
+     [
+      "inema-mods",
+      "https://inematds.github.io/inema-mods/guia/"
+     ]
+    ]
+   ],
+   [
+    "Contexto y delegación",
+    [
+     [
+      "skillmanager3x",
+      "https://inematds.github.io/skillmanager3x/guia/"
+     ],
+     [
+      "agente-claude-codex",
+      "https://inematds.github.io/agente-claude-codex/guia/"
+     ],
+     [
+      "Subagentes",
+      "https://inematds.github.io/subagentes/"
+     ],
+     [
+      "7conselho",
+      "https://inematds.github.io/7conselho/guia/"
+     ]
+    ]
+   ],
+   [
+    "En marcha sin ti",
+    [
+     [
+      "OSWork",
+      "https://eventos.inema.pro/oswork/"
+     ],
+     [
+      "OSWork v6.2",
+      "https://inematds.github.io/oswork-v62/"
+     ],
+     [
+      "LOOP-R",
+      "https://inematds.github.io/loop-r/guia/"
+     ],
+     [
+      "Área de Mods",
+      "https://eventos.inema.pro/mods/"
+     ]
+    ]
+   ]
+  ]
+ },
+ "video": {
+  "chip": "Video",
+  "h2": "Los 15 cambios en video",
+  "sub": "El video explicativo completo y un reel corto para compartir con quien todavía escribe prompts de trescientas líneas.",
+  "longo": "Explicativo (16:9)",
+  "reel": "Reel (9:16)",
+  "baixar": "Descargar MP4"
+ },
+ "fim": {
+  "chip": "Para recordar",
+  "h2": "Menos instrucciones, más pruebas",
+  "img": "c6-fim.jpg",
+  "img_alt": "Robot de visor negro y una persona frente a un tablero con tres iconos: carpeta, engranaje y sello de verificación",
+  "linhas": [
+   [
+    "Skill",
+    "solo lo que hace mal"
+   ],
+   [
+    "Modelo",
+    "elige uno y quédate con él"
+   ],
+   [
+    "Pruebas",
+    "prueba, archivo, verificador"
+   ],
+   [
+    "Contexto",
+    "archivos pequeños y referencias"
+   ],
+   [
+    "Sem você",
+    "solo después de verificar"
+   ]
+  ],
+  "frase": "El avance no consiste en darle más autonomía al agente. Consiste en que trabaje con menos instrucciones, use menos contexto y demuestre que terminó."
+ },
+ "footer": {
+  "stack": [
+   "Claude Code",
+   "Codex",
+   "Agentes",
+   "Gratis"
+  ],
+  "nota": "guía y kit abiertos y gratuitos"
+ },
+ "camada_rot": "Capa"
+}

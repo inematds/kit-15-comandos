@@ -1,0 +1,18 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash ./checa.sh || { echo 'checa.sh reprovou: corrija os itens FALHOU antes de parar' >&2; exit 2; }"
+          },
+          {
+            "type": "prompt",
+            "prompt": "Antes de deixar parar: a última resposta mostra a saída do checa.sh com PRONTO? Se não mostrar, responda que não pode parar e diga o que falta."
+          }
+        ]
+      }
+    ]
+  }
+}
