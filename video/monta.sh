@@ -11,6 +11,7 @@ import json
 json.dump({"pt-b01":{"id":"$ID","title":"$T","status":"completed","downloaded":True,"file":"$A","duration":round(float("$DUR"),1),"via":"estudio"}},open("$D/v1/verification/blocos-downloads.json","w"),indent=2)
 P
 cd $EV/engine
+EXPLICAVIDEOS_CONFIG=$EV/examples/$C1 python3 build_scene_templates.py
 echo "== v1 $(date +%T)"; EXPLICAVIDEOS_CONFIG=$EV/examples/$C1 python3 produce_blocks.py
 EXPLICAVIDEOS_CONFIG=$EV/examples/$C1 python3 wait_assembly.py || true
 cd $EV; export EXPLICAVIDEOS_CONFIG=$EV/examples/$C2
